@@ -1,8 +1,8 @@
 import asyncio
 from telebot.async_telebot import AsyncTeleBot
 from config import token
-from send import send_application 
-from db import Database
+from funcs.send import send_application 
+from funcs.db import Database
 
 bot = AsyncTeleBot(token)
 
@@ -16,13 +16,12 @@ async def start(message):
     if db.is_register(message.from_user.id):
         db.register_user(message.from_user.id)
     
-    test_button = Inline
     await bot.send_message(message.from_user.id, text=f'Привет {message.from_user.username}')
     await bot.send_message(message.from_user.id, text='Как зовут вашего ребенка?')
     steps[message.from_user.id] = 1
 
 @bot.message_handler()
-async def sss(message):
+async def send(message):
     global steps, years, name, number
     print(steps)
 
@@ -44,7 +43,7 @@ async def sss(message):
         number = message.text
         db.add_phone(message.from_user.id, number)
         await bot.send_message(message.from_user.id, text=f'Заявка была отправлена нашему менеджеру')
-        message = f'Новая заявка!\nИмя - {name} \nВозраст - {years} \nИнтересующий курс -   \nНомер родителя  -  {number}  \nЗапись на курс - \nПОРА РАБОТАТЬ!  '
+        message = f'Новая заявка!\nИмя - {name} \nВозраст - {years} \nИнтересующий курс - \nНомер родителя  -  {number}  \nЗапись на курс - \nПОРА РАБОТАТЬ!  '
         send_application(user_id=5221339225, token=token, message=message)
 
 @bot.callback_query_handler(func=lambda call: True)
