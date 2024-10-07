@@ -25,7 +25,8 @@ async def sss(message):
     if message.from_user.id == 'Отправить заявку 📃':
         steps[message.from_user.id] = 1
         # тут отправляем сообщению. 
-
+        await bot.send_message(message.from_user.id, text='Начнем заполнение анкеты?')
+        name = await bot.send_message(message.from_user.id, text='Имя Вашего ребенка?')
     if steps[message.from_user.id] == 1: #сюда придёт имя ребёнка
         name = message.text
         db.add_name(message.from_user.id, name)
