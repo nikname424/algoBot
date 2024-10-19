@@ -13,3 +13,4 @@ mainInlineButtons = InlineKeyboardMarkup()
 ExitButtonInline = InlineKeyboardButton('Назад' , callback_data='exit')
 KlientButtonInline = InlineKeyboardButton('Записаться' , callback_data='Klient')
 mainInlineButtons.add(KlientButtonInline, ExitButtonInline)
+
