@@ -22,11 +22,12 @@ async def sss(message):
     global steps, years, name, number
     print(steps)
 
-    if message.text == 'Отправить заявку 📃':
+    if message.from_user.id == 'Отправить заявку 📃':
         steps[message.from_user.id] = 1
-        await bot.send_message(message.from_user.id, text='Как зовут Вашего ребёнка?')
-
-    elif steps[message.from_user.id] == 1: #сюда придёт имя ребёнка
+        # тут отправляем сообщению. 
+        await bot.send_message(message.from_user.id, text='Начнем заполнение анкеты?')
+        name = await bot.send_message(message.from_user.id, text='Имя Вашего ребенка?')
+    if steps[message.from_user.id] == 1: #сюда придёт имя ребёнка
         name = message.text
         db.add_name(message.from_user.id, name)
         await bot.send_message(message.from_user.id, text='Сколько лет вашему ребенку?')
@@ -47,7 +48,7 @@ async def sss(message):
 
     ################33333
 
-    elif message.text == 'Узнать курсы 📚':
+    elif message.from_user.id == 'Узнать курсы 📚':
         # задача никиты
         print('ggg')
 
