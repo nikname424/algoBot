@@ -36,3 +36,14 @@ class Database():
     def add_phone(self, user_id, numder):
         with self.connection:
             self.cursor.execute("UPDATE users SET phone = ? WHERE user_id = ?", (numder, user_id,))
+
+    def showCourse(self):
+        return_list = []
+        with self.connection:
+            self.cursor.execute("SELECT name FROM kursu")
+            courses = self.cursor.fetchall()
+
+            for course in courses:
+                return_list.append(course[0])
+        
+        return return_list
