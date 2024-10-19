@@ -9,7 +9,7 @@ pr2iv21et2Button = KeyboardButton('Отправить заявку 📃')
 mainButton.add(pr2iv21et2Button, pri3v2et2Button)
 
 # создание кнопок Inline
-# mainInlineButtons = InlineKeyboardMarkup()
+mainInlineButtons = InlineKeyboardMarkup()
 ExitButtonInline = InlineKeyboardButton('Назад' , callback_data='exit')
 KlientButtonInline = InlineKeyboardButton('Записаться' , callback_data='Klient')
-
+mainInlineButtons.add(KlientButtonInline, ExitButtonInline)
