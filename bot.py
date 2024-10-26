@@ -21,48 +21,53 @@ async def start(message):
 
 @bot.message_handler()
 async def sss(message):
+    global steps, years, name, number
+    print(steps)
+
     if message.text == 'Отправить заявку 📃':
+        steps[message.from_user.id] = 1
         # тут отправляем сообщению. 
         await bot.send_message(message.from_user.id, text='Начнем заполнение анкеты?')
-        steps[message.from_user.id] = 1
+        name = await bot.send_message(message.from_user.id, text='Имя Вашего ребенка?')
+        sleep(5)
+        steps[message.from_user.id] = 1.01
+
 
     if message.text == 'Узнать курсы 📚':
         list_course = db.showCourse()
         num = 0
         for course in list_course:
-            coursesMarkup.add(InlineKeyboardButton(course, callback_data=f'{course}'))
+            print(course)
+            coursesMarkup.add(InlineKeyboardButton(course, callback_data=f'{num}_{message.from_user.id}'))
             num += 1
 
         await bot.send_message(message.from_user.id, text='Сколько лет вашему ребенку?', reply_markup=coursesMarkup)
 
-    elif steps[message.from_user.id] == 1: #сюда придёт имя ребёнка
+    if steps[message.from_user.id] == 1.01: #сюда придёт имя ребёнка
         name = message.text
         db.add_name(message.from_user.id, name)
-
         await bot.send_message(message.from_user.id, text='Сколько лет вашему ребенку?')
-        steps[message.from_user.id] = 2
+        steps[message.from_user.id] = 1.1
         
-    elif steps[message.from_user.id] == 2: #сюда придёт возраст ребёнка
+    elif steps[message.from_user.id] == 1.1: #сюда придёт возраст ребёнка
         years = message.text
         db.add_old(message.from_user.id , years)
-
-        steps[message.from_user.id] = 3
+        steps[message.from_user.id] = 1.2
         await bot.send_message(message.from_user.id, text='Укажите контакт (номер телефона)')
 
-    elif steps[message.from_user.id] == 4: 
+    elif steps[message.from_user.id] == 1.2: 
         number = message.text
         db.add_phone(message.from_user.id, number)
         await bot.send_message(message.from_user.id, text=f'Заявка была отправлена нашему менеджеру')
         message = f'Новая заявка!\nИмя - {name} \nВозраст - {years} \nИнтересующий курс -   \nНомер родителя  -  {number}  \nЗапись на курс - \nПОРА РАБОТАТЬ!  '
         send_application(user_id=5221339225, token=token, message=message)
 
+    ################33333
+
 @bot.callback_query_handler(func=lambda call: True)
 async def get_callback(call): 
-    list_courses = db.showCourse()
-
-    if call.data in list_courses:
-        info = db.showInfoCourse(call.data)
-        print(info) 
+    if call.data == 'test': 
+        print('hello')
 
 async def main():
     await bot.infinity_polling()
