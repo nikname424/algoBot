@@ -57,8 +57,6 @@ async def sss(message):
         message = f'Новая заявка!\nИмя - {name} \nВозраст - {years} \nИнтересующий курс -   \nНомер родителя  -  {number}  \nЗапись на курс - \nПОРА РАБОТАТЬ!  '
         send_application(user_id=5221339225, token=token, message=message)
 
-    ################33333
-
 @bot.callback_query_handler(func=lambda call: True)
 async def get_callback(call): 
     if call.data == 'test': 

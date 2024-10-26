@@ -47,3 +47,8 @@ class Database():
                 return_list.append(course[0])
         
         return return_list
+    
+    def showInfoCourse(self, course):
+        with self.connection:
+            self.cursor.execute('SELECT opisanoe FROM kursu WHERE name = ?', (course,))
+            return self.cursor.fetchone()[0]
