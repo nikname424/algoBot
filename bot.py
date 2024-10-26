@@ -5,6 +5,7 @@ from funcs.db import Database
 from markups.markups import mainButton, coursesMarkup
 from telebot.types import InlineKeyboardButton
 import asyncio
+from time import *
 
 bot = AsyncTeleBot(token)
 
@@ -28,6 +29,9 @@ async def sss(message):
         # тут отправляем сообщению. 
         await bot.send_message(message.from_user.id, text='Начнем заполнение анкеты?')
         name = await bot.send_message(message.from_user.id, text='Имя Вашего ребенка?')
+        sleep(5)
+        steps[message.from_user.id] = 1.01
+
 
     if message.text == 'Узнать курсы 📚':
         list_course = db.showCourse()
@@ -39,7 +43,7 @@ async def sss(message):
 
         await bot.send_message(message.from_user.id, text='Сколько лет вашему ребенку?', reply_markup=coursesMarkup)
 
-    if steps[message.from_user.id] == 1: #сюда придёт имя ребёнка
+    if steps[message.from_user.id] == 1.01: #сюда придёт имя ребёнка
         name = message.text
         db.add_name(message.from_user.id, name)
         await bot.send_message(message.from_user.id, text='Сколько лет вашему ребенку?')
