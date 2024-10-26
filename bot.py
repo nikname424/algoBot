@@ -30,8 +30,7 @@ async def sss(message):
         list_course = db.showCourse()
         num = 0
         for course in list_course:
-            print(course)
-            coursesMarkup.add(InlineKeyboardButton(course, callback_data=f'{num}_{message.from_user.id}'))
+            coursesMarkup.add(InlineKeyboardButton(course, callback_data=f'{course}'))
             num += 1
 
         await bot.send_message(message.from_user.id, text='Сколько лет вашему ребенку?', reply_markup=coursesMarkup)
@@ -59,8 +58,11 @@ async def sss(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 async def get_callback(call): 
-    if call.data == 'test': 
-        print('hello')
+    list_courses = db.showCourse()
+
+    if call.data in list_courses:
+        info = db.showInfoCourse(call.data)
+        print(info) 
 
 async def main():
     await bot.infinity_polling()

@@ -50,5 +50,5 @@ class Database():
     
     def showInfoCourse(self, course):
         with self.connection:
-            self.cursor.execute('SELECT opisanoe FROM kursu WHERE name = ?', (course,))
+            self.cursor.execute('SELECT opisanie FROM kursu WHERE name = ?', (course,))
             return self.cursor.fetchone()[0]
