@@ -16,3 +16,12 @@ mainInlineButtons.add(KlientButtonInline, ExitButtonInline)
 
 # сетка с курсами
 coursesMarkup = InlineKeyboardMarkup()
+
+edit_markup = InlineKeyboardMarkup()
+edit_name_button = InlineKeyboardButton('Редактировать имя' , callback_data='name')
+edit_years_button = InlineKeyboardButton('Редактировать возраст' , callback_data='years')
+edit_number_button = InlineKeyboardButton('Редактировать номер' , callback_data='number')
+edit_send_button = InlineKeyboardButton('Отправить заявку' , callback_data='send')
+edit_markup.add(edit_name_button, edit_years_button, edit_number_button, edit_send_button)
+
+
